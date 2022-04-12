@@ -1,0 +1,28 @@
+mysql steps........
+
+
+create project folder open with cmd
+npm init --y // by Craete package.json
+npm install mysql // by install nodejs and mysql.
+
+
+//index.js (Database confection configuration)...........
+
+  var mysql = require('mysql');
+  var DatabaseConnectionConfig ={
+      host: "localhost",
+      user: "root",
+      password: ""
+  }
+
+var con = mysql.createConnection(DatabaseConnectionConfig);
+con.connect(function (error){
+   if(error){
+     console.log("Connection fail")  
+   }else{
+     console.log("Connection Successfull")  
+   }
+});
+
+
+
