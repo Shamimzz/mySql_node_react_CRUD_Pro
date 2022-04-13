@@ -43,7 +43,7 @@ app.post("/crud/insert", async(req, res)=>{
 
 
 // Select all data from database........
-app.get("/features", (req, res) => {
+app.get("/features", async(req, res) => {
   console.log("Hitting body", req.body);
 
   const SQLQuery = "SELECT * FROM movie_reviews";
@@ -56,11 +56,55 @@ app.get("/features", (req, res) => {
       res.send(result);
     }
   })
-
-
 });
 
 
+
+
+app.get("/features/edit/:Id", async(req, res) => {
+   
+  console.log("Hitting edit", req.params.body);
+  // const data = req.body
+
+  // const SQLQuery = "DELETE FROM movie_reviews WHERE Id = ?";
+
+  // Db.query(SQLQuery, (err, result)=>{
+  //   if(err){
+  //     console.log("Wrong")
+  //   }else{
+  //     console.log(result);
+  //     res.send(result);
+  //   }
+  // })
+
+})
+
+
+
+
+
+
+
+
+
+// Delete data from database........
+// app.delete("/features/delete/:Id", async(req, res) => {
+   
+//   console.log("Hitting delete", req.params.body);
+//   // const data = req.body
+
+//   const SQLQuery = "DELETE FROM movie_reviews WHERE Id = ?";
+
+//   Db.query(SQLQuery, (err, result)=>{
+//     if(err){
+//       console.log("Wrong")
+//     }else{
+//       console.log(result);
+//       res.send(result);
+//     }
+//   })
+
+// })
 
 
 
