@@ -83,27 +83,24 @@ app.get("/features/edit/:Id", async(req, res) => {
 
 
 
-
-
-
 // Delete data from database........
-// app.delete("/features/delete/:Id", async(req, res) => {
-   
-//   console.log("Hitting delete", req.params.body);
-//   // const data = req.body
+app.delete("/features/delete/:Id", async(req, res) => {
 
-//   const SQLQuery = "DELETE FROM movie_reviews WHERE Id = ?";
+  console.log("Hitting delete", req.params.Id);
+  const Id =  req.params.Id
 
-//   Db.query(SQLQuery, (err, result)=>{
-//     if(err){
-//       console.log("Wrong")
-//     }else{
-//       console.log(result);
-//       res.send(result);
-//     }
-//   })
+  const SQLQuery = "DELETE FROM movie_reviews WHERE Id = ?";
 
-// })
+  Db.query(SQLQuery, [Id], (err, result)=>{
+    if(err){
+      console.log("Wrong")
+    }else{
+      console.log(result);
+      res.send(result);
+    }
+  })
+
+})
 
 
 
