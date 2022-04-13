@@ -1,8 +1,16 @@
 const express = require('express');
-const app = express();
 var mysql = require('mysql');
+const cors = require('cors');
+const bodyParser = require('body-parser')
 
-var port = 3001;
+// initialize our express app
+const port = 5000;
+const app = express();
+require('dotenv').config()
+app.use(cors());
+app.use(express.json()); // ata na dile server a undefined dekhabe, data asbe na. 
+app.use(bodyParser.urlencoded({ extended: false }));
+
 
 var dbConnectionConfig ={
     host: "localhost",
@@ -22,14 +30,19 @@ con.connect(function (error){
 
 
 
+// app.get('/api', async(req, res)=>{
+//   console.log('Hiii Body', req.body);
+// })
+
+
 app.post("/crud/insert", async(req, res)=>{
-  const body = req.body;
-  const [moviName, director, date, price] = req.body;
-  console.log("Hiting body", body);
+  const {name, director, date, price} = req.body;
 
-  const SQLQuery = "INSERT INTO `movie_reviews`(`name`, `director`, `date`, `price`) VALUES (?,?,?,?)";
+  const SQLQuery =
+   "INSERT INTO `movie_reviews`(`name`, `director`) VALUES (?,?)";
 
-  dbConnectionConfig.query(SQLQuery, [moviName, director, date, price], (err, result)=>{
+  dbConnectionConfig.query(SQLQuery, [name, director], (err, result)=>{
+    console.log(err);
     if(err){
       console.log("Wrong")
     }else{
@@ -40,6 +53,12 @@ app.post("/crud/insert", async(req, res)=>{
 })
 
 
+// app.get("/crud", (req, res) => {
+//   const body = req.body;
+//   res.send("getting data on Ui..", body);
+// });
+
+
 
 
 
@@ -47,7 +66,7 @@ app.post("/crud/insert", async(req, res)=>{
 
 
 app.get("/", (req, res) => {
-  res.send("Hi database");
+  res.send("Local database Working....");
 });
 
 app.listen(port, ()=>{
