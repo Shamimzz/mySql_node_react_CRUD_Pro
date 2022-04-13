@@ -60,22 +60,21 @@ app.get("/features", async(req, res) => {
 
 
 
-
+// Get all data By ID from database........
 app.get("/features/edit/:Id", async(req, res) => {
-   
-  console.log("Hitting edit", req.params.body);
-  // const data = req.body
+  // console.log("Hitting edit", req.params.Id);
+  const Id = req.params.Id;
 
-  // const SQLQuery = "DELETE FROM movie_reviews WHERE Id = ?";
+  const SQLQuery = "DELETE FROM movie_reviews WHERE Id = ?";
 
-  // Db.query(SQLQuery, (err, result)=>{
-  //   if(err){
-  //     console.log("Wrong")
-  //   }else{
-  //     console.log(result);
-  //     res.send(result);
-  //   }
-  // })
+  Db.query(SQLQuery, [Id], (err, result)=>{
+    if(err){
+      console.log("Wrong")
+    }else{
+      console.log(result);
+      res.send(result);
+    }
+  })
 
 })
 
