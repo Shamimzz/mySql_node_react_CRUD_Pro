@@ -8,41 +8,29 @@ const port = 5000;
 const app = express();
 require('dotenv').config()
 app.use(cors());
-app.use(express.json()); // ata na dile server a undefined dekhabe, data asbe na. 
+// ata na dile server a undefined dekhabe, data asbe na. 
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-var dbConnectionConfig ={
+var Db = mysql.createPool({
     host: "localhost",
     user: "root",
     password: "", 
-    database: "CRUD_Operation"
-   }
-
-var con = mysql.createConnection(dbConnectionConfig);
-con.connect(function (error){
-   if(error){
-     console.log("Connection fail")  
-   }else{
-     console.log("mySQL Connected Successfull")  
-   }
-});
+    database: "crud_operation"
+   });
 
 
 
-// app.get('/api', async(req, res)=>{
-//   console.log('Hiii Body', req.body);
-// })
-
-
+// Insert all data from Client........   
 app.post("/crud/insert", async(req, res)=>{
   const {name, director, date, price} = req.body;
+  // console.log(name, director);
 
   const SQLQuery =
-   "INSERT INTO `movie_reviews`(`name`, `director`) VALUES (?,?)";
+   "INSERT INTO movie_reviews (name, director, date, price) VALUES (?,?,?,?)";
 
-  dbConnectionConfig.query(SQLQuery, [name, director], (err, result)=>{
-    console.log(err);
+  Db.query(SQLQuery, [name, director, date, price], (err, result)=>{
     if(err){
       console.log("Wrong")
     }else{
@@ -53,10 +41,24 @@ app.post("/crud/insert", async(req, res)=>{
 })
 
 
-// app.get("/crud", (req, res) => {
-//   const body = req.body;
-//   res.send("getting data on Ui..", body);
-// });
+
+// Select all data from database........
+app.get("/features", (req, res) => {
+  console.log("Hitting body", req.body);
+
+  const SQLQuery = "SELECT * FROM movie_reviews";
+
+  Db.query(SQLQuery, (err, result)=>{
+    if(err){
+      console.log("Wrong")
+    }else{
+      console.log(result);
+      res.send(result);
+    }
+  })
+
+
+});
 
 
 
@@ -65,6 +67,10 @@ app.post("/crud/insert", async(req, res)=>{
 
 
 
+
+
+
+// Database Listing......
 app.get("/", (req, res) => {
   res.send("Local database Working....");
 });
