@@ -62,10 +62,10 @@ app.get("/features", async(req, res) => {
 
 // Get all data By ID from database........
 app.get("/features/edit/:Id", async(req, res) => {
-  // console.log("Hitting edit", req.params.Id);
+  console.log("Hitting edit", req.params.Id);
   const Id = req.params.Id;
 
-  const SQLQuery = "DELETE FROM movie_reviews WHERE Id = ?";
+  const SQLQuery = "UPDATE FROM movie_reviews WHERE Id = ?";
 
   Db.query(SQLQuery, [Id], (err, result)=>{
     if(err){
